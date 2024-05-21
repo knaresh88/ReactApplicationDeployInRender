@@ -13,7 +13,7 @@ const EmployeeList = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get('http://localhost:8002/api/emp/list/');
+        const response = await axios.get('https://fullstackapplication-8.onrender.com/api/emp/list/');
         setEmployees(response.data);
       } catch (error) {
         console.log(error);
@@ -30,7 +30,7 @@ const EmployeeList = () => {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8002/api/emp/${id}/delete/`)
+    axios.delete(`https://fullstackapplication-8.onrender.com/api/emp/${id}/delete/`)
       .then(response => {
         setEmployees(employeeList.filter(employee => employee.id !== id));
         setSuccessMessage('Employee deleted successfully.');
@@ -60,7 +60,7 @@ const EmployeeList = () => {
   // };
   const handleFormSubmit = async (updatedEmployee) => {
     try {
-      const response = await axios.put(`http://localhost:8002/api/emp/${updatedEmployee.id}/`, updatedEmployee);
+      const response = await axios.put(`https://fullstackapplication-8.onrender.com/api/emp/${updatedEmployee.id}/`, updatedEmployee);
       console.log('Response from server:', response.data);
       setSuccessMessage('Employee updated successfully.');
       setErrorMessage('');
