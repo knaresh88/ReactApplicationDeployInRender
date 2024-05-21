@@ -10,7 +10,7 @@ const App = () => {
   
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get('http://localhost:8002/api/emp/list/');
+      const response = await axios.get('https://fullstackapplication-8.onrender.com/api/emp/list/');
       setEmployees(response.data);
     } catch (error) {
       console.log(error);
