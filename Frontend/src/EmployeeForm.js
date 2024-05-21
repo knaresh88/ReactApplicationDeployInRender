@@ -21,7 +21,7 @@ const EmployeeForm = ({ onEmployeeAdded, setEmployees }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8002/api/emp/', formData);
+      const response = await axios.post('https://fullstackapplication-8.onrender.com/api/emp/', formData);
       console.log('Response from server:', response.data);
       setSuccessMessage('Employee added successfully.');
       setErrorMessage('');
