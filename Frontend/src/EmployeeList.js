@@ -23,7 +23,7 @@ const EmployeeList = () => {
     };
 
     fetchEmployees();
-  }, []);
+  }, [employeeList]);
 
   const handleEdit = (employee) => {
     setSelectedEmployee(employee);
@@ -45,19 +45,6 @@ const EmployeeList = () => {
       });
   };
 
-  // const handleFormSubmit = (updatedEmployee) => {
-  //   axios.put(`http://localhost:8002/api/emp/${updatedEmployee.id}/`, updatedEmployee)
-  //     .then(response => {
-  //       setEmployees(employeeList.map(employee =>
-  //         employee.id === updatedEmployee.id ? updatedEmployee : employee
-  //       ));
-  //       setSelectedEmployee(null);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //       console.error("Failed to edit employee.");
-  //     });
-  // };
   const handleFormSubmit = async (updatedEmployee) => {
     try {
       const response = await axios.put(`https://fullstackapplication-8.onrender.com/api/emp/${updatedEmployee.id}/`, updatedEmployee);
