@@ -46,6 +46,36 @@ pipeline:
                       python manage.py test usersApp
               - step:
                   type: Run
+                  name: Install Frontend Dependencies
+                  identifier: install_frontend_dependencies
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: node:14
+                    shell: Sh
+                    command: |
+                      npm install
+              - step:
+                  type: Run
+                  name: Build Frontend
+                  identifier: build_frontend
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: node:14
+                    shell: Sh
+                    command: |
+                      npm run build
+              - step:
+                  type: Run
+                  name: Run Frontend Tests
+                  identifier: run_frontend_tests
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: node:14
+                    shell: Sh
+                    command: |
+                      npm test
+              - step:
+                  type: Run
                   name: Deploy Backend
                   identifier: deploy_backend
                   spec:
