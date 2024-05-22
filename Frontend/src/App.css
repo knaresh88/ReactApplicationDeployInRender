@@ -1,4 +1,5 @@
 /* APP.css */
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;
@@ -64,7 +65,7 @@ form input[type="date"],
 form input[type="number"] {
   width: calc(20% - 10px);
   padding: 10px;
-  border: 1px solid #ced4da;
+  border: 3px solid #047a80fc;
   border-radius: 40px;
   font-size: 16px;
 }
@@ -73,7 +74,7 @@ form button {
   width: 100%;
   padding: 12px;
   border: none;
-  background-color: #007bff;
+  background-color: #006eff;
   color: white;
   border-radius: 4px;
   cursor: pointer;
@@ -92,7 +93,7 @@ table {
 }
 
 table thead {
-  background-color: #343a40;
+  background-color: #344b2e;
   color: white;
 }
 
@@ -126,7 +127,7 @@ button {
 }
 
 button.edit {
-  background-color: #007bff;
+  background-color: #35b527;
   color: white;
 }
 
@@ -214,4 +215,8 @@ button.delete:hover {
 .user-list button.edit-btn {
   background-color: #007bff;
   color: white;
+}
+
+.naresh-input {
+  width: 120px !important;
 }
