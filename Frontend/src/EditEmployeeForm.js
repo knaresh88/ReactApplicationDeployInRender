@@ -26,6 +26,7 @@ const EditEmployeeForm = ({ employee, onSubmit, onCancel }) => {
         <input
           type="text"
           name="name"
+          class="naresh-input"
           value={formData.name}
           onChange={handleChange}
         />
@@ -35,6 +36,7 @@ const EditEmployeeForm = ({ employee, onSubmit, onCancel }) => {
         <input
           type="date"
           name="birthdate"
+          class="naresh-input"
           value={formData.birthdate}
           onChange={handleChange}
         />
@@ -44,6 +46,7 @@ const EditEmployeeForm = ({ employee, onSubmit, onCancel }) => {
         <input
           type="text"
           name="department"
+          class="naresh-input"
           value={formData.department}
           onChange={handleChange}
         />
@@ -53,6 +56,7 @@ const EditEmployeeForm = ({ employee, onSubmit, onCancel }) => {
         <input
           type="number"
           name="salary"
+          class="naresh-input"
           value={formData.salary}
           onChange={handleChange}
         />
