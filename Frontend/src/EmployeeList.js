@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
-import EditEmployeeForm from './EditEmployeeForm';
+import EditEmployeeForm from '../EditEmployeeForm';
 
 const EmployeeList = () => {
   const [employeeList, setEmployees] = useState([]);
