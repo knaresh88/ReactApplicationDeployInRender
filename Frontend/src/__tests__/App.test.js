@@ -1,8 +1,7 @@
-// App.test.js
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
-import App from '../App.js';
+import App from '../App';
 
 jest.mock('axios');
 
@@ -20,8 +19,9 @@ describe('App', () => {
     render(<App />);
 
     await waitFor(() => {
-      expect(screen.getAllByText('Add Employee')).toHaveLength(2); // Adjust the expected length based on your component structure
+      expect(screen.getAllByText('Add Employee')).toHaveLength(2);
       expect(screen.getByText('Employee List')).toBeInTheDocument();
     });
   });
 });
+// App.test.js
