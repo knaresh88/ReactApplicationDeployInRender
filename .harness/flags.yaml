@@ -1,0 +1,91 @@
+pipeline:
+  name: frontend
+  identifier: frontend
+  projectIdentifier: FullStackApplication
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: backend
+        repoName: ReactApplicationDeployInRender
+        build: <+input>
+  stages:
+    - stage:
+        name: build
+        identifier: build
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Run_1
+                  identifier: Run_1
+                  spec:
+                    shell: Sh
+                    command: echo 'success'
+              - step:
+                  type: Run
+                  name: Install Frontend Dependencies
+                  identifier: install_frontend_dependencies
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: node:14
+                    shell: Sh
+                    command: |
+                      cd Frontend && npm install
+                      npm install --save-dev @babel/preset-env @babel/preset-react @babel/preset-typescript
+                      npm install @testing-library/react @testing-library/jest-dom axios
+                      npm update @babel/core babel-jest @testing-library/react jest
+                      npm install --save-dev @testing-library/react
+              - step:
+                  type: Run
+                  name: Copy Jest Configurations
+                  identifier: copy_jest_configurations
+                  spec:
+                    shell: Sh
+                    command: |
+                      cp Frontend/jest.config.js ./
+                      cp Frontend/babel.config.js ./
+                      cp Frontend/setupTests.js ./
+              - step:
+                  type: Run
+                  name: Build Frontend
+                  identifier: build_frontend
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: node:14
+                    shell: Sh
+                    command: |
+                      cd Frontend && npm run build 
+              - step:
+                  type: Run
+                  name: Run Frontend Tests
+                  identifier: run_frontend_tests
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: node:14
+                    shell: Sh
+                    command: echo "testing"
+              - step:
+                  type: Run
+                  name: push to prod
+                  identifier: push_to_prod
+                  spec:
+                    shell: Sh
+                    command: |-
+                      git config --global user.email "nareshkummaripydev88@gmail.com"
+                      git config --global user.name "knaresh88"
+                      git fetch --all && git checkout prod &&
+                      git merge origin/dev &&
+                      git push https://<+secrets.getValue("GIT_USERNAME")>:<+secrets.getValue("GIT_PASSWORD")>@github.com/knaresh88/ReactApplicationDeployInRender.git prod ||
+                      echo "Error: Failed to move changes to prod branch"
