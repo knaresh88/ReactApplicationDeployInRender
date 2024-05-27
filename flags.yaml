@@ -25,7 +25,7 @@ featureFlags:
         default:
           onVariation: "false"
           offVariation: "false"
-        state: "on"
+        state: "off"
   - flag:
       name: Flag2
       identifier: Flag2
