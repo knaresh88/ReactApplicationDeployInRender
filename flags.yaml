@@ -1,6 +1,32 @@
 featureFlags:
   flags:
   - flag:
+      name: CURD_Operations
+      identifier: CURD_Operations
+      description: ""
+      permanent: true
+      spec:
+        type: boolean
+        default:
+          onVariation: "false"
+          offVariation: "false"
+        variations:
+        - identifier: "true"
+          value: "true"
+        - identifier: "false"
+          value: "false"
+      environments:
+      - identifier: test
+        default:
+          onVariation: "false"
+          offVariation: "false"
+        state: "off"
+      - identifier: dev
+        default:
+          onVariation: "false"
+          offVariation: "false"
+        state: "off"
+  - flag:
       name: Flag2
       identifier: Flag2
       description: ""
