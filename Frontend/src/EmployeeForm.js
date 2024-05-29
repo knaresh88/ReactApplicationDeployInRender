@@ -1,6 +1,7 @@
 // EmployeeForm.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './App.css';
 
 const EmployeeForm = ({ onEmployeeAdded, setEmployees }) => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,21 @@ const EmployeeForm = ({ onEmployeeAdded, setEmployees }) => {
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isFeatureEnabled, setIsFeatureEnabled] = useState(false);
 
+  useEffect(() => {
+    const checkFeatureFlag = async () => {
+      try {
+        const response = await axios.get('https://fullstackapplication-8.onrender.com/api/emp/feature_flag/My_Test_Flag');
+        console.log('Feature flag status:', response.data.feature_enabled); // Add this line to log the flag status
+        setIsFeatureEnabled(response.data.feature_enabled);
+      } catch (error) {
+        console.error('Error checking feature flag status:', error);
+      }
+    };
+
+    checkFeatureFlag();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,7 +41,6 @@ const EmployeeForm = ({ onEmployeeAdded, setEmployees }) => {
       setSuccessMessage('Employee added successfully.');
       setErrorMessage('');
 
-      // Call onEmployeeAdded function with the new employee data
       onEmployeeAdded(response.data);
 
       setFormData({
@@ -36,20 +50,19 @@ const EmployeeForm = ({ onEmployeeAdded, setEmployees }) => {
         salary: '',
       });
 
-      // Update employees state using the callback function (if provided)
       if (setEmployees) {
         setEmployees(prevEmployees => [...prevEmployees, response.data]);
       }
-
     } catch (error) {
       console.error('Error adding employee:', error.response || error);
-      setErrorMessage('Failed to add employee. Please try again.');
+      setErrorMessage('Failed to add employee. Check if the feature flag is disabled.');
       setSuccessMessage('');
     }
   };
 
-  
-
+  if (!isFeatureEnabled) {
+    return <p></p>;
+  }
 
   return (
     <div>
