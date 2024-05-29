@@ -9,6 +9,7 @@ const EmployeeList = () => {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isFeatureEnabled, setIsFeatureEnabled] = useState(false);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -18,12 +19,25 @@ const EmployeeList = () => {
       } catch (error) {
         console.log(error);
         setErrorMessage('Failed to fetch employees. Please try again.');
-
       }
     };
 
+    const checkFeatureFlag = async () => {
+      try {
+        const response = await axios.get('https://fullstackapplication-8.onrender.com/api/emp/feature_flag/My_Test_Flag');
+        console.log('Feature flag status:', response.data.feature_enabled); // Add this line to log the flag status
+        setIsFeatureEnabled(response.data.feature_enabled);
+      } catch (error) {
+        console.error('Error checking feature flag status:', error);
+      }
+    };
+
+    checkFeatureFlag();
     fetchEmployees();
-  }, [employeeList]);
+    const intervalId = setInterval(fetchEmployees, 30000); // fetch data every 30 seconds
+
+    return () => clearInterval(intervalId); // clean up on unmount
+  }, []);
 
   const handleEdit = (employee) => {
     setSelectedEmployee(employee);
@@ -35,13 +49,11 @@ const EmployeeList = () => {
         setEmployees(employeeList.filter(employee => employee.id !== id));
         setSuccessMessage('Employee deleted successfully.');
         setErrorMessage('');
-      
       })
       .catch(error => {
         console.log(error);
-        console.error("Check flag Status, Failed to delete employee.");
+        setErrorMessage('Failed to delete employee. Check if the feature flag is disabled.');
         setSuccessMessage('');
-
       });
   };
 
@@ -57,14 +69,12 @@ const EmployeeList = () => {
         )
       );
       setSelectedEmployee(null);
-
     } catch (error) {
-      console.error('Error updating employee:', error.response || error);
-      setErrorMessage('Failed to update employee. Please try again.');
+      console.error('Error updating employee. Check if the feature flag is disabled:', error.response || error);
+      setErrorMessage('Failed to update employee. Check if the feature flag is disabled.');
       setSuccessMessage('');
     }
   };
-  
 
   return (
     <div>
@@ -92,8 +102,12 @@ const EmployeeList = () => {
                 <td>{employee.department}</td>
                 <td>{employee.salary}</td>
                 <td>
-                  <button onClick={() => handleEdit(employee)}>Edit</button>
-                  <button onClick={() => handleDelete(employee.id)}>Delete</button>
+                  {isFeatureEnabled && (
+                    <>
+                      <button className="Edit" onClick={() => handleEdit(employee)}>Edit</button>
+                      <button onClick={() => handleDelete(employee.id)}>Delete</button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))
