@@ -18,7 +18,7 @@ const EmployeeList = () => {
         setEmployees(response.data);
       } catch (error) {
         console.log(error);
-        setErrorMessage('Failed to fetch employees. Please try again.');
+        setErrorMessage(' Feature flag disabled for employee data.');
       }
     };
 
