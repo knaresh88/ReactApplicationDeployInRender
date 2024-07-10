@@ -17,8 +17,11 @@ const App = () => {
     }
   };
   useEffect(() => {
+    setInterval( ()=>{
     fetchEmployees();
-  }, [employees]);
+
+    },3000);
+    }, [employees]);
 
   const handleEmployeeAdded = async() => {
     fetchEmployees(); // Update the employee list
