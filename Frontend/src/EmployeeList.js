@@ -81,7 +81,7 @@ const EmployeeList = () => {
   return (
     <div>
       <h2>Employee List</h2>
-      {errorMessage && <div className="error">{errorMessage}</div>}
+      {errorMessage && <div className="info">{errorMessage}</div>}
       {successMessage && <div className="success">{successMessage}</div>}
       <table className="table">
         <thead>
