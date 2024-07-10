@@ -19,6 +19,7 @@ const EmployeeList = () => {
       } catch (error) {
         console.log(error);
         setErrorMessage(' Feature flag disabled for employee data.');
+        setEmployees([]);
       }
     };
 
