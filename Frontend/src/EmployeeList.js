@@ -16,6 +16,7 @@ const EmployeeList = () => {
       try {
         const response = await axios.get('https://fullstackapplication-8.onrender.com/api/emp/list/');
         setEmployees(response.data);
+        setErrorMessage("Feature flag enabled for employee data');
       } catch (error) {
         console.log(error);
         setErrorMessage(' Feature flag disabled for employee data.');
@@ -80,7 +81,7 @@ const EmployeeList = () => {
   return (
     <div>
       <h2>Employee List</h2>
-      {errorMessage && <div className="error">{errorMessage}</div>}
+      {errorMessage && <div className="info">{errorMessage}</div>}
       {successMessage && <div className="success">{successMessage}</div>}
       <table className="table">
         <thead>
